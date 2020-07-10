@@ -5,10 +5,12 @@
 const request = require('request-promise');
 
 const greeting = (langCode) => {
-  return request('<URL>') // 1
-    .then((response) => JSON.parse(response))
+  return request(`https://journeyedu.herokuapp.com/hello/${langCode}`) // 1
+    .then((response) => {
+      return JSON.parse(response)
+    })
     .then((parsedResponse) => {
-      return; // 2
+      return parsedResponse// 2
     })
     .catch((err) => console.log('Error: ', err));
 };
@@ -17,3 +19,5 @@ const greeting = (langCode) => {
 greeting('fr').then((result) => console.log(result)); // { lang: "French", code: "FR", text: "Bonjour" }
 
 // 3
+greeting('es').then((result) => console.log(result));
+greeting('it').then((result) => console.log(result));
