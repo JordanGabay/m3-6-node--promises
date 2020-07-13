@@ -9,17 +9,10 @@ const getIssPosition = () => {
   return request('http://api.open-notify.org/iss-now.json')
   .then(response => JSON.parse(response))
   .then(parsedResponse => {
-    const currentPosition = parsedResponse.iss_position
-    parsedResponse.iss_position = {
-      lat: currentPosition.latitude,
-      lon: currentPosition.longitude
-    }
-    return parsedResponse
+    let { longitude, latitude } = parsedResponse.iss_position
+    return { lat: Number(latitude), lng: Number(longitude) }
   })
-  .catch((err) => {
-    return err.error ? JSON.parse(err.error) : err;
-  });
-  // write some code...
+  .catch(err => console.log(err));
 };
 
-getIssPosition().then((result) => console.log(result));
+getIssPosition().then(position => console.log(position));
